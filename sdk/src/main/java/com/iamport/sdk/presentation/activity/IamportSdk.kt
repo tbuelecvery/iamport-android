@@ -187,7 +187,7 @@ internal class IamportSdk(
      * 모든 결과 처리 및 SDK 종료
      */
     private fun sdkFinish(iamPortResponse: IamPortResponse?) {
-        i("SDK Finish")
+//        i("SDK Finish")
         d(iamPortResponse.toString())
 
         closeDeleteWebViewMode() // sdk 끝나는거니까 필요함
@@ -200,7 +200,7 @@ internal class IamportSdk(
      * 뷰모델 데이터 클리어
      */
     private fun clearMainViewModel() {
-        d("clearMainViewModel!")
+//        d("clearMainViewModel!")
 
         updatePolling(false) // 차이 폴링 외부 인터페이스 초기화
         mainViewModel?.controlForegroundService(false) // 차이 포그라운드 서비스 초기화
@@ -225,7 +225,7 @@ internal class IamportSdk(
 
     // 외부 종료
     fun close() {
-        d("do Close!")
+//        d("do Close!")
 
         disableWebViewMode()
         closeDeleteWebViewMode() // 외부에서 종료하니까 필요함
@@ -233,7 +233,7 @@ internal class IamportSdk(
     }
 
     fun initClose() {
-        d("do initClose!")
+//        d("do initClose!")
 
         disableWebViewMode() // 웹뷰모드 끄기
         closeDeleteWebViewMode() // 초기화 하니까 필요함
@@ -252,7 +252,7 @@ internal class IamportSdk(
      * 본인인증 요청시 실행
      */
     fun initStart(payment: Payment, paymentResultCallBack: ((IamPortResponse?) -> Unit)?) {
-        i("HELLO I'MPORT SDK! for cert")
+//        i("HELLO I'MPORT SDK! for cert")
 
         closeDeleteWebViewMode() // 결제 시작할 때
 //        initClearData() // 결제 시작할 때
@@ -268,7 +268,7 @@ internal class IamportSdk(
      * 결제 요청시 실행
      */
     fun initStart(payment: Payment, approveCallback: ((IamPortApprove) -> Unit)?, paymentResultCallBack: ((IamPortResponse?) -> Unit)?) {
-        i("HELLO I'MPORT SDK! for payment")
+//        i("HELLO I'MPORT SDK! for payment")
 
         closeDeleteWebViewMode() // 결제 시작할 때
 //        initClearData() // 결제 시작할 때
@@ -375,7 +375,7 @@ internal class IamportSdk(
      */
     private fun resultCallback() {
 //        d("차이 앱이 종료됐지만 아무것도 안할게!!")
-        d("Result Callback ChaiLauncher")
+//        d("Result Callback ChaiLauncher")
         mainViewModel?.forceChaiStatusCheck()
     }
 
@@ -437,14 +437,14 @@ internal class IamportSdk(
      * 웹뷰 결제 요청 실행
      */
     private fun requestWebViewActivityPayment(payment: Payment) {
-        d("request WebViewActivity Payment $payment")
+//        d("request WebViewActivity Payment $payment")
         clearMainViewModel()
         modeWebViewRef?.get()?.let { webView ->
             hostHelper.getActivityRef()?.let { activity ->
                 iamPortWebViewMode = IamPortWebViewMode()
                 iamPortWebViewMode?.initStart(activity, webView, payment, paymentResultCallBack) // webview only 모드
             } ?: run {
-                w("Cannot found activity, So running activity mode")
+//                w("Cannot found activity, So running activity mode")
                 webViewActivityLauncher?.launch(payment) // new activity 모드
             }
         } ?: run {
@@ -456,7 +456,7 @@ internal class IamportSdk(
      * 차이앱 외부앱 열기
      */
     private fun openChaiApp(it: String) {
-        i("openChaiApp")
+//        i("openChaiApp")
         d(it)
 
         var chaiClearVersion = false
@@ -467,7 +467,7 @@ internal class IamportSdk(
                 chaiClearVersion = checkChaiVersionCode(it)
             }
         }.onFailure { thr: Throwable ->
-            i("${thr.message}, chaiClearVersion 가져오는 도중 에러남. 네이티브 모드로 실행.")
+//            i("${thr.message}, chaiClearVersion 가져오는 도중 에러남. 네이티브 모드로 실행.")
         }
 
         // 차이 WebStrategy 로 동작
@@ -479,13 +479,13 @@ internal class IamportSdk(
             }
         }
 
-        d("chaiClearVersion($chaiClearVersion) == false 면, 여기까지 안와야함")
+//        d("chaiClearVersion($chaiClearVersion) == false 면, 여기까지 안와야함")
 
         // 네이티브 차이 앱 실행
         runCatching {
             launcherChai?.launch(it to "openchai")
         }.onFailure { thr: Throwable ->
-            i("${thr.message}")
+//            i("${thr.message}")
             movePlayStore(Intent.parseUri(it, Intent.URI_INTENT_SCHEME))
             clearMainViewModel()
         }
@@ -494,11 +494,11 @@ internal class IamportSdk(
     private fun getIntentPackage(intent: Intent): String? {
         return intent.`package` ?: run {
             // intent 에 패키지 없으면 ProvidePgPkg에서 intnet.schme 으로 앱 패키지 검색
-            i("Not found in intent package")
+//            i("Not found in intent package")
             when (val providePgPkg = intent.scheme?.let { ProvidePgPkg.from(it) }) {
                 null -> {
-                    i("Not found in intent schme")
-                    d("Not found in intent schme :: ${intent.scheme}")
+//                    i("Not found in intent schme")
+//                    d("Not found in intent schme :: ${intent.scheme}")
                     return@run null
                 }
                 else -> providePgPkg.pkg
@@ -512,7 +512,7 @@ internal class IamportSdk(
      */
     private fun movePlayStore(intent: Intent) {
         getIntentPackage(intent)?.let {
-            d("movePlayStore :: $it")
+//            d("movePlayStore :: $it")
             Intent(Intent.ACTION_VIEW, Uri.parse(Util.getMarketId(it))).run {
                 flags = Intent.FLAG_ACTIVITY_NO_USER_ACTION
                 when (hostHelper.mode) {
@@ -529,9 +529,9 @@ internal class IamportSdk(
 
         runCatching {
             versionCode = Util.versionCode(mainViewModel?.app, chaiPackageName).toLong()
-            d("chai app version : $versionCode")
+//            d("chai app version : $versionCode")
         }.onFailure {
-            i("Fail to get chai app version [${it.message}]")
+//            i("Fail to get chai app version [${it.message}]")
         }
 
         return versionCode > CHAI.SINGLE_ACTIVITY_VERSION

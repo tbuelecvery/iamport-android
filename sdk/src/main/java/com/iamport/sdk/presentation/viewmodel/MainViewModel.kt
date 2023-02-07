@@ -47,7 +47,7 @@ class MainViewModel(private val bus: NativeLiveDataEventBus, private val reposit
 
 
     override fun onCleared() {
-        d("onCleared")
+//        d("onCleared")
         clearData()
         super.onCleared()
     }
@@ -113,7 +113,7 @@ class MainViewModel(private val bus: NativeLiveDataEventBus, private val reposit
                     }
                 }
 
-                d("$this")
+//                d("$this")
                 when (first) {
                     JudgeStrategy.JudgeKinds.CHAI -> second?.let {
                         it.pg_id?.let { pgId ->
@@ -149,7 +149,7 @@ class MainViewModel(private val bus: NativeLiveDataEventBus, private val reposit
      */
     fun requestApprovePayments(approve: IamPortApprove) {
         viewModelScope.launch(job) {
-            i("차이 최종 결제 요청")
+//            i("차이 최종 결제 요청")
             repository.chaiStrategy.requestApprovePayments(approve)
             approved = Status.None
         }
@@ -157,7 +157,7 @@ class MainViewModel(private val bus: NativeLiveDataEventBus, private val reposit
 
     fun forceChaiStatusCheck() {
         viewModelScope.launch(job) {
-            d("[차이앱 결제 상태 강제 체크]")
+//            d("[차이앱 결제 상태 강제 체크]")
             repository.chaiStrategy.onceCheckRemoteChaiStatus()
         }
     }
@@ -184,7 +184,7 @@ class MainViewModel(private val bus: NativeLiveDataEventBus, private val reposit
 
     fun controlForegroundService(it: Boolean) {
         if (!ChaiService.enableForegroundService) {
-            d("차이 폴링 포그라운드 서비스 실행하지 않음")
+//            d("차이 폴링 포그라운드 서비스 실행하지 않음")
             return
         }
 
@@ -193,15 +193,15 @@ class MainViewModel(private val bus: NativeLiveDataEventBus, private val reposit
             Intent(this, ChaiService::class.java).also { intent: Intent ->
                 if (it) {
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                        d("startForegroundService")
+//                        d("startForegroundService")
                         intent.action = ChaiService.START_SERVICE // notify 호출 위해 명시 선언
                         startForegroundService(intent)
                     } else {
-                        d("startForegroundService")
+//                        d("startForegroundService")
                         startService(intent)
                     }
                 } else {
-                    d("stopService")
+//                    d("stopService")
                     stopService(intent)
                 }
             }

@@ -144,7 +144,7 @@ object Iamport {
         })
 
         isCreated = true
-        d("Create IAMPORT SDK")
+//        d("Create IAMPORT SDK")
 
 //        v("LOG TEST VERBOSE")
 //        d("LOG TEST DEBUG")
@@ -177,7 +177,7 @@ object Iamport {
     val callback = fun(iamPortResponse: IamPortResponse?) {
 
         if (iamPortResponse == null) {
-            i("iamPortResponse 없이 결제 종료")
+//            i("iamPortResponse 없이 결제 종료")
             impCallbackFunction?.invoke(iamPortResponse)
             return
         }
@@ -198,7 +198,7 @@ object Iamport {
 
     private fun isCalledResponse(impUid: String): Boolean {
         if (response?.imp_uid == impUid) {
-            i("이미 종료 호출된 imp_uid[$impUid] 이므로 다시 호출하지 않음")
+//            i("이미 종료 호출된 imp_uid[$impUid] 이므로 다시 호출하지 않음")
             return true
         }
         return false
@@ -216,7 +216,7 @@ object Iamport {
 //            return
         }
 
-        d("INITIALIZE IAMPORT SDK from activity")
+//        d("INITIALIZE IAMPORT SDK from activity")
 //        close()
         iamportSdk?.initClose()
 
@@ -244,7 +244,7 @@ object Iamport {
 //            return
         }
 
-        d("INITIALIZE IAMPORT SDK from fragment")
+//        d("INITIALIZE IAMPORT SDK from fragment")
 //        close()
         iamportSdk?.initClose()
 
@@ -337,7 +337,7 @@ object Iamport {
 
     // webview 사용 모드
     private fun enableWebViewMode(webview: WebView) {
-        d("enableWebViewMode $webview")
+//        d("enableWebViewMode $webview")
         iamportSdk?.enableWebViewMode(WeakReference(webview))
     }
 

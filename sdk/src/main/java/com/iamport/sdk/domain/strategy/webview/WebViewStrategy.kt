@@ -62,7 +62,7 @@ open class WebViewStrategy : BaseWebViewStrategy() {
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     fun paymentOver(uri: Uri) {
         val response = Util.getQueryStringToImpResponse(uri, gson)
-        d("paymentOver :: $response")
+//        d("paymentOver :: $response")
         sdkFinish(response)
     }
 

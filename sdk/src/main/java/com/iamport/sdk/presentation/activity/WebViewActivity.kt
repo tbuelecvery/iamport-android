@@ -36,13 +36,13 @@ class WebViewActivity : BaseActivity<WebViewModel>(), IamportKoinComponent {
         runCatching {
             removeObservers()
         }.onFailure {
-            d("ignore fail close webview $it")
+//            d("ignore fail close webview $it")
         }
         super.onDestroy()
     }
 
     override fun initStart() {
-        i("HELLO I'MPORT WebView SDK!")
+//        i("HELLO I'MPORT WebView SDK!")
 
         loading = findViewById(R.id.loading)
         webview = findViewById(R.id.webview)
@@ -57,7 +57,7 @@ class WebViewActivity : BaseActivity<WebViewModel>(), IamportKoinComponent {
     }
 
     override fun onNewIntent(intent: Intent?) {
-        d("onNewIntent")
+//        d("onNewIntent")
         super.onNewIntent(intent)
         this.intent = intent
 //        removeObserveViewModel(payment)
@@ -123,20 +123,20 @@ class WebViewActivity : BaseActivity<WebViewModel>(), IamportKoinComponent {
 
     private fun removeObservers() {
         runCatching {
-            d("WebViewActivity removeObservers")
+//            d("WebViewActivity removeObservers")
             viewModel.loading().removeObservers(this)
             viewModel.openWebView().removeObservers(this)
 //            viewModel.niceTransRequestParam().removeObservers(this)
             viewModel.thirdPartyUri().removeObservers(this)
             viewModel.impResponse().removeObservers(this)
         }.onFailure {
-            e("Fail WebViewActivity removeObservers$it")
+            e("Fail WebViewActivity removeObservers $it")
         }
     }
 
     private fun close() {
         runCatching {
-            d("WebViewActivity close")
+//            d("WebViewActivity close")
             removeObservers()
 
             webview.run {
@@ -147,7 +147,7 @@ class WebViewActivity : BaseActivity<WebViewModel>(), IamportKoinComponent {
                 destroy()
             }
         }.onFailure {
-            e("Fail WebViewActivity close$it")
+            e("Fail WebViewActivity close $it")
         }
     }
 
@@ -155,8 +155,8 @@ class WebViewActivity : BaseActivity<WebViewModel>(), IamportKoinComponent {
      * 모든 결과 처리 및 SDK 종료
      */
     override fun sdkFinish(iamPortResponse: IamPortResponse?) {
-        i("call sdkFinish")
-        d("sdkFinish => ${iamPortResponse.toString()}")
+//        i("call sdkFinish")
+//        d("sdkFinish => ${iamPortResponse.toString()}")
 
         close()
         loadingVisible(false)
@@ -183,14 +183,14 @@ class WebViewActivity : BaseActivity<WebViewModel>(), IamportKoinComponent {
      * 외부앱 열기
      */
     override fun openThirdPartyApp(it: Uri) {
-        d("openThirdPartyApp $it")
+//        d("openThirdPartyApp $it")
         Intent.parseUri(it.toString(), Intent.URI_INTENT_SCHEME)?.let { intent: Intent ->
             runCatching {
                 startActivity(intent)
             }.recoverCatching {
                 movePlayStore(intent)
             }.onFailure {
-                i("설치 버튼을 이용하여 앱을 설치하세요.")
+//                i("설치 버튼을 이용하여 앱을 설치하세요.")
             }
         }
         loadingVisible(false)
@@ -203,21 +203,21 @@ class WebViewActivity : BaseActivity<WebViewModel>(), IamportKoinComponent {
     override fun movePlayStore(intent: Intent) {
         val pkg = intent.`package` ?: run {
             // intent 에 패키지 없으면 ProvidePgPkg에서 intnet.schme 으로 앱 패키지 검색
-            i("Not found intent package")
+//            i("Not found intent package")
             when (val providePgPkg = intent.scheme?.let { ProvidePgPkg.from(it) }) {
                 null -> {
-                    e("Not found intent schme :: ${intent.scheme}")
+                    e("Not found intent scheme :: ${intent.scheme}")
                     return@run null
                 }
                 else -> {
-                    d("Found pkg : ${providePgPkg.pkg}")
+//                    d("Found pkg : ${providePgPkg.pkg}")
                     providePgPkg.pkg
                 }
             }
         }
 
         if (!pkg.isNullOrBlank()) {
-            d("movePlayStore :: $pkg")
+//            d("movePlayStore :: $pkg")
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(Util.getMarketId(pkg))))
         }
     }
@@ -227,11 +227,11 @@ class WebViewActivity : BaseActivity<WebViewModel>(), IamportKoinComponent {
      * 웹뷰 오픈
      */
     override fun openWebView(payment: Payment) {
-        d("오픈! 웹뷰")
+//        d("오픈! 웹뷰")
 
         val evaluateJS = fun(jsMethod: String) {
             val js = "javascript:$jsMethod"
-            d("evaluateJS => $js")
+//            d("evaluateJS => $js")
             launch {
                 webview.run {
                     this.loadUrl(js)

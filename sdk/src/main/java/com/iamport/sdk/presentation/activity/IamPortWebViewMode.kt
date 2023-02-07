@@ -34,7 +34,7 @@ open class IamPortWebViewMode @JvmOverloads constructor(
      * BaseActivity 에서 onCreate 시 호출
      */
     fun initStart(activity: ComponentActivity, webview: WebView, payment: Payment, paymentResultCallBack: ((IamPortResponse?) -> Unit)?) {
-        i("HELLO I'MPORT WebView MODE SDK!")
+//        i("HELLO I'MPORT WebView MODE SDK!")
         this.activity = activity
         this.webview = webview
         this.paymentResultCallBack = paymentResultCallBack
@@ -68,7 +68,7 @@ open class IamPortWebViewMode @JvmOverloads constructor(
      * 결제 요청 실행
      */
     override fun requestPayment(it: Payment) {
-        d("나왔니??")
+//        d("나왔니??")
         activity?.run {
             if (!Util.isInternetAvailable(this)) {
                 sdkFinish(IamPortResponse.makeFail(it, msg = "네트워크 연결 안됨"))
@@ -79,10 +79,10 @@ open class IamPortWebViewMode @JvmOverloads constructor(
     }
 
     private fun removeObservers() {
-        d("removeObservers")
+//        d("removeObservers")
         activity?.let {
             viewModel.run {
-                d("do removeObservers")
+//                d("do removeObservers")
                 openWebView().removeObservers(it)
 //                niceTransRequestParam().removeObservers(it)
                 thirdPartyUri().removeObservers(it)
@@ -94,7 +94,7 @@ open class IamPortWebViewMode @JvmOverloads constructor(
     }
 
     fun close() {
-        d("close WebViewMode")
+//        d("close WebViewMode")
         removeObservers()
         webview?.run {
             removeJavascriptInterface(CONST.PAYMENT_WEBVIEW_JS_INTERFACE_NAME)
@@ -112,8 +112,8 @@ open class IamPortWebViewMode @JvmOverloads constructor(
      * IamportSdk 안건너고, 바로 콜백 호출하여 종료.
      */
     override fun sdkFinish(iamPortResponse: IamPortResponse?) {
-        i("call sdkFinish")
-        d("sdkFinish => ${iamPortResponse.toString()}")
+//        i("call sdkFinish")
+//        d("sdkFinish => ${iamPortResponse.toString()}")
         removeObservers()
         paymentResultCallBack?.invoke(iamPortResponse)
     }
@@ -135,14 +135,14 @@ open class IamPortWebViewMode @JvmOverloads constructor(
      * 외부앱 열기
      */
     override fun openThirdPartyApp(it: Uri) {
-        d("openThirdPartyApp $it")
+//        d("openThirdPartyApp $it")
         Intent.parseUri(it.toString(), Intent.URI_INTENT_SCHEME)?.let { intent: Intent ->
             runCatching {
                 activity?.startActivity(intent)
             }.recoverCatching {
                 movePlayStore(intent)
             }.onFailure {
-                i("설치 버튼을 이용하여 앱을 설치하세요.")
+//                i("설치 버튼을 이용하여 앱을 설치하세요.")
             }
         }
     }
@@ -154,7 +154,7 @@ open class IamPortWebViewMode @JvmOverloads constructor(
     override fun movePlayStore(intent: Intent) {
         val pkg = intent.`package` ?: run {
             // intent 에 패키지 없으면 ProvidePgPkg에서 intnet.schme 으로 앱 패키지 검색
-            i("Not found intent package")
+//            i("Not found intent package")
             when (val providePgPkg = intent.scheme?.let { ProvidePgPkg.from(it) }) {
                 null -> {
                     e("Not found intent schme :: ${intent.scheme}")
@@ -165,7 +165,7 @@ open class IamPortWebViewMode @JvmOverloads constructor(
         }
 
         if (!pkg.isNullOrBlank()) {
-            d("movePlayStore :: $pkg")
+//            d("movePlayStore :: $pkg")
             activity?.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(Util.getMarketId(pkg))))
         }
     }
@@ -175,11 +175,11 @@ open class IamPortWebViewMode @JvmOverloads constructor(
      * 웹뷰 오픈
      */
     override fun openWebView(payment: Payment) {
-        d("오픈! 웹뷰 $payment")
+//        d("오픈! 웹뷰 $payment")
 
         val evaluateJS = fun(jsMethod: String) {
             val js = "javascript:$jsMethod"
-            d("evaluateJS => $js")
+//            d("evaluateJS => $js")
             launch {
                 webview?.run {
                     this.loadUrl(js)
@@ -202,7 +202,7 @@ open class IamPortWebViewMode @JvmOverloads constructor(
             loadUrl(CONST.PAYMENT_FILE_URL) // load WebView
             webChromeClient = IamportWebChromeClient()
         } ?: run {
-            e("웹뷰가 없엉..")
+            e("webview is null")
         }
     }
 

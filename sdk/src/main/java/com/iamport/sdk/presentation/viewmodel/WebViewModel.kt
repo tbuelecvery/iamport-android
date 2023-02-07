@@ -19,7 +19,7 @@ class WebViewModel(private val repository: StrategyRepository) : BaseViewModel()
     private val bus: WebViewLiveDataEventBus by lazy { WebViewLiveDataEventBus }
 
     override fun onCleared() {
-        d("onCleared")
+//        d("onCleared")
         repository.init()
         super.onCleared()
     }

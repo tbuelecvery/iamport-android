@@ -13,7 +13,7 @@ import com.orhanobut.logger.Logger.d
 class ChaiContract : ActivityResultContract<Pair<String, String>, String?>() {
 
     override fun createIntent(context: Context, input: Pair<String, String>): Intent {
-        d("createIntent :: $input")
+//        d("createIntent :: $input")
         return Intent.parseUri(input.first, Intent.URI_INTENT_SCHEME).apply {
             flags = Intent.FLAG_ACTIVITY_NO_USER_ACTION
             putExtra("input", input.second)
@@ -23,7 +23,7 @@ class ChaiContract : ActivityResultContract<Pair<String, String>, String?>() {
     override fun parseResult(resultCode: Int, intent: Intent?): String? {
         return when (resultCode) {
             Activity.RESULT_OK -> {
-                d("${intent?.getStringExtra("output")}")
+//                d("${intent?.getStringExtra("output")}")
                 intent?.getStringExtra("output")
             }
             else -> {

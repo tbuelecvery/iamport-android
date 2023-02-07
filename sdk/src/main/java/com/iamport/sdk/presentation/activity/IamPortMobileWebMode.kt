@@ -52,7 +52,7 @@ open class IamPortMobileWebMode() : IamPortWebViewMode() {
 
     override fun sdkFinish(iamPortResponse: IamPortResponse?) {
         // ignore
-        Logger.d("sdkFinish MobileWebMode => $iamPortResponse")
+//        Logger.d("sdkFinish MobileWebMode => $iamPortResponse")
     }
 
     private fun openWebView() {

@@ -34,7 +34,7 @@ open class NiceTransWebViewStrategy : WebViewStrategy() {
         webView = view
 
         request?.url?.let {
-            d("아주 나이스~ $it")
+//            d("아주 나이스~ $it")
 //            if (isNiceTransScheme(it)) {
 //
 //                bankTid = it.getQueryParameter(NiceBankpay.USER_KEY).toString()

@@ -69,10 +69,10 @@ object ScreenChecker : ActivityLifecycleCallbacks {
 //        setTopActivityWeakRef(activity)
         isScreenOn = true
         if (++running == 1) {
-            d("app is 포그라운드! 살아왔다")
+//            d("app is 포그라운드! 살아왔다")
             appStatus = AppStatus.RETURNED_TO_FOREGROUND
         } else if (running > 1) {
-            d("app is 포그라운드")
+//            d("app is 포그라운드")
             appStatus = AppStatus.FOREGROUND
         }
     }
@@ -81,7 +81,7 @@ object ScreenChecker : ActivityLifecycleCallbacks {
     override fun onActivityStopped(activity: Activity) {
 //        setTopActivityWeakRef(activity)
         if (--running == 0) {
-            d("app is 백그라운드")
+//            d("app is 백그라운드")
             appStatus = AppStatus.BACKGROUND
         }
     }

@@ -25,7 +25,7 @@ open class BaseWebViewStrategy : WebViewClient(), IStrategy {
 
     override suspend fun doWork(payment: Payment) {
         super.doWork(payment)
-        d("doWork! $payment")
+//        d("doWork! $payment")
         this.payment = payment
     }
 
