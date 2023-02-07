@@ -1,3 +1,3 @@
-rootProject.name = "AndroidSdk"
+rootProject.name = "iamport-android"
 include(":sdk")
 include(":app")
