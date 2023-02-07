@@ -81,7 +81,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize"
-            android:theme="@style/Theme.AppCompat.Transparent.NoActionBar">
+            android:theme="@style/Iamport.Theme.AppCompat.Transparent.NoActionBar">
         </activity>
 
     </application>

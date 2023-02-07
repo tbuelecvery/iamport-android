@@ -239,7 +239,7 @@ class WebViewActivity : BaseActivity<WebViewModel>(), IamportKoinComponent {
             }
         }
 
-        setTheme(R.style.Theme_AppCompat_Transparent_NoActionBar)
+        setTheme(R.style.Iamport_Theme_AppCompat_Transparent_NoActionBar)
 //        updateAlpha(true)
         loadingVisible(true)
 
